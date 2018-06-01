@@ -3,15 +3,29 @@
 make clean
 make
 
-printf 'n   time \n' > result_basic.data
-printf 'n   time \n' > result_dotproduct.data
-printf 'n   time \n' > result_cached.data
-printf 'n   time \n' > result_both.data
+printf 'type   n   time \n' > result.data
+
 
 for i in {3..1000};
 do
-	out/main_basic <<<"$i" >> result_basic.data
-	out/main_dotproduct <<<"$i" >> result_dotproduct.data
-	out/main_cached <<<"$i" >> result_cached.data
-	out/main_both <<<"$i" >> result_both.data
+	printf 'basic  ' >> result.data
+	out/main_basic <<<"$i" >> result.data
+	printf 'dotproduct  ' >> result.data
+	out/main_dotproduct <<<"$i" >> result.data
+	printf 'cached  ' >> result.data
+	out/main_cached <<<"$i" >> result.data
+	printf 'both  ' >> result.data
+	out/main_both <<<"$i" >> result.data
+	printf 'builtin  ' >> result.data
+	out/main_builtin <<<"$i" >> result.data
+	printf 'basic_o2  ' >> result.data
+	out/main_basic_o2 <<<"$i" >> result.data
+	printf 'dotproduct_o2  ' >> result.data
+	out/main_dotproduct_o2 <<<"$i" >> result.data
+	printf 'cached_o2  ' >> result.data
+	out/main_cached_o2 <<<"$i" >> result.data
+	printf 'both_o2  ' >> result.data
+	out/main_both_o2 <<<"$i" >> result.data
+	printf 'builtin_o2  ' >> result.data
+	out/main_builtin_o2 <<<"$i" >> result.data
 done
