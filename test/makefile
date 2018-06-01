@@ -13,16 +13,24 @@ matrix_multiplication_test.F90: matrix_multiplication_test.pf
 	$(PFUNIT)/bin/pFUnitParser.py $< $@
 
 matrix_multiplication_basic.o:
+	make
 	ifort $(FFLAGS) -c ../src/matrix_multiplication.f90 -D "BASIC=1" -o matrix_multiplication.o
 
 matrix_multiplication_dotproduct.o:
+	make
 	ifort $(FFLAGS) -c ../src/matrix_multiplication.f90 -D "DOTPRODUCT=1" -o matrix_multiplication.o
 
 matrix_multiplication_cached.o:
+	make
 	ifort $(FFLAGS) -c ../src/matrix_multiplication.f90 -D "CACHED=1" -o matrix_multiplication.o
 
 matrix_multiplication_both.o:
-	ifort $(FFLAGS) -c ../src/matrix_multiplication.f90 -D "BOTH=1" -o matrix_multiplication.o			
+	make
+	ifort $(FFLAGS) -c ../src/matrix_multiplication.f90 -D "BOTH=1" -o matrix_multiplication.o
+	
+matrix_multiplication_builtin.o:
+	make
+	ifort $(FFLAGS) -c ../src/matrix_multiplication.f90 -D "BUILTIN=1" -o matrix_multiplication.o					
 
 test_basic: testSuites.inc matrix_multiplication_basic.o $(OBJS)
 	ifort -o $@ -D "BASIC=1" -I$(PFUNIT)/mod -I$(PFUNIT)/include $(PFUNIT)/include/driver.F90 ./*$(OBJ_EXT) $(LIBS) $(FFLAGS)
@@ -35,3 +43,6 @@ test_cached: testSuites.inc matrix_multiplication_cached.o $(OBJS)
 
 test_both: testSuites.inc matrix_multiplication_both.o $(OBJS)
 	ifort -o $@ -D "BOTH=1" -I$(PFUNIT)/mod -I$(PFUNIT)/include $(PFUNIT)/include/driver.F90 ./*$(OBJ_EXT) $(LIBS) $(FFLAGS)
+
+test_builtin: testSuites.inc matrix_multiplication_builtin.o $(OBJS)
+	ifort -o $@ -D "BUILTIN=1" -I$(PFUNIT)/mod -I$(PFUNIT)/include $(PFUNIT)/include/driver.F90 ./*$(OBJ_EXT) $(LIBS) $(FFLAGS)
